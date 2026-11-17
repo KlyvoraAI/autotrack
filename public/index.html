@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101923"><meta name="description" content="Your car's personal assistant. Track maintenance, mileage, repairs and fuel costs.">
+<title>AutoTrack — Your car's personal assistant</title>
+<link rel="icon" href="/autotrack.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar">
+  <a class="brand" href="#"><img src="/autotrack.svg" alt=""><span>Auto<span>Track</span></span></a>
+  <div class="garage-label">MY GARAGE</div><div id="vehicle-switcher" class="vehicle-switcher"></div>
+  <nav>
+    <button class="nav-item active" data-page="dashboard"><span>⌂</span> Overview</button>
+    <button class="nav-item" data-page="maintenance"><span>⚙</span> Maintenance</button>
+    <button class="nav-item" data-page="mileage"><span>↗</span> Mileage log</button>
+    <button class="nav-item" data-page="expenses"><span>$</span> Expenses</button>
+    <button class="nav-item" data-page="reminders"><span>◷</span> Reminders <i id="reminder-count"></i></button>
+  </nav>
+  <div class="sidebar-bottom"><div class="help-card"><strong>Stay road-ready.</strong><p>Keep your vehicle's important details in one place.</p></div><small>YOUR GARAGE, ORGANIZED.</small></div>
+</aside>
+<main class="main">
+<header class="topbar"><div><div class="eyebrow">VEHICLE MANAGEMENT</div><h1 id="page-title">Overview</h1></div><div class="top-actions"><button class="btn btn-ghost" id="add-vehicle">＋ Add vehicle</button><button class="avatar">AT</button></div></header>
+<section id="dashboard" class="page active">
+  <div class="welcome-row"><div><p class="muted" id="today-label">YOUR VEHICLE AT A GLANCE</p><h2 id="vehicle-heading">Your garage</h2><p class="muted" id="vehicle-subheading">Add a vehicle to get started.</p></div><button class="btn btn-primary" id="quick-log">＋ Log an expense</button></div>
+  <div class="stats-grid">
+    <article class="stat-card"><span class="stat-icon blue">↗</span><span class="stat-label">CURRENT MILEAGE</span><strong id="stat-mileage">—</strong><small id="stat-mileage-note">Odometer reading</small></article>
+    <article class="stat-card"><span class="stat-icon green">⚙</span><span class="stat-label">MAINTENANCE ITEMS</span><strong id="stat-maintenance">0</strong><small>Service records</small></article>
+    <article class="stat-card"><span class="stat-icon amber">$</span><span class="stat-label">THIS MONTH</span><strong id="stat-month">$0.00</strong><small>Vehicle expenses</small></article>
+    <article class="stat-card"><span class="stat-icon purple">◷</span><span class="stat-label">UPCOMING REMINDERS</span><strong id="stat-reminders">0</strong><small>Due soon or overdue</small></article>
+  </div>
+  <div class="content-grid">
+    <article class="panel"><div class="panel-head"><div><h3>Maintenance schedule</h3><p>Keep your next service on track.</p></div><button class="text-btn" data-goto="maintenance">View all →</button></div><div id="dashboard-maintenance" class="empty-state">No maintenance records yet. Add your first service to start your history.</div></article>
+    <article class="panel"><div class="panel-head"><div><h3>Recent expenses</h3><p>Your latest vehicle spending.</p></div><button class="text-btn" data-goto="expenses">View all →</button></div><div id="dashboard-expenses" class="empty-state">No expenses recorded yet.</div></article>
+  </div>
+  <article class="panel reminder-panel"><div class="panel-head"><div><h3>Reminders to watch</h3><p>Upcoming and overdue maintenance.</p></div><button class="text-btn" data-goto="reminders">Manage reminders →</button></div><div id="dashboard-reminders" class="empty-state">You're all caught up. Add maintenance reminders to stay ahead.</div></article>
+</section>
+<section id="maintenance" class="page">
+ <div class="section-toolbar"><div><h2>Maintenance history</h2><p class="muted">Track oil changes, tires, brakes, inspections and more.</p></div><button class="btn btn-primary" id="add-maintenance">＋ Add service</button></div>
+ <div class="filter-row"><select id="maintenance-filter"><option value="all">All service types</option><option>Oil change</option><option>Tire rotation</option><option>Brakes</option><option>Inspection</option><option>Battery</option><option>Other</option></select></div>
+ <div id="maintenance-list" class="panel-list"></div>
+</section>
+<section id="mileage" class="page">
+ <div class="section-toolbar"><div><h2>Mileage log</h2><p class="muted">Keep a reliable record of your odometer readings.</p></div><button class="btn btn-primary" id="add-mileage">＋ Log mileage</button></div>
+ <div class="stats-grid compact"><article class="stat-card"><span class="stat-label">CURRENT ODOMETER</span><strong id="mileage-current">—</strong><small>Latest recorded reading</small></article><article class="stat-card"><span class="stat-label">TOTAL ENTRIES</span><strong id="mileage-entries">0</strong><small>Readings in your log</small></article></div>
+ <div id="mileage-list" class="panel-list"></div>
+</section>
+<section id="expenses" class="page">
+ <div class="section-toolbar"><div><h2>Vehicle expenses</h2><p class="muted">Fuel, repairs, maintenance and other costs.</p></div><button class="btn btn-primary" id="add-expense">＋ Add expense</button></div>
+ <div class="stats-grid compact"><article class="stat-card"><span class="stat-label">TOTAL SPENDING</span><strong id="expense-total">$0.00</strong><small>For this vehicle</small></article><article class="stat-card"><span class="stat-label">FUEL SPENDING</span><strong id="expense-fuel">$0.00</strong><small>Recorded fuel costs</small></article></div>
+ <div id="expense-list" class="panel-list"></div>
+</section>
+<section id="reminders" class="page">
+ <div class="section-toolbar"><div><h2>Maintenance reminders</h2><p class="muted">Set date-based or mileage-based reminders.</p></div><button class="btn btn-primary" id="add-reminder">＋ Add reminder</button></div>
+ <div id="reminder-list" class="panel-list"></div>
+</section>
+</main>
+</div>
+<div class="modal-backdrop" id="modal"><div class="modal"><div class="modal-head"><div><span class="eyebrow">AUTOTRACK</span><h2 id="modal-title">Add record</h2></div><button class="close-btn" id="modal-close">×</button></div><form id="modal-form"><div id="modal-fields"></div><div class="modal-actions"><button type="button" class="btn btn-ghost" id="modal-cancel">Cancel</button><button type="submit" class="btn btn-primary">Save record</button></div></form></div></div>
+<div class="toast" id="toast"></div>
+<script src="/app.js"></script>
+</body></html>
