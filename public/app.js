@@ -67,7 +67,7 @@ document.addEventListener('click',ev=>{
  const edit=ev.target.closest('[data-edit]');if(edit){const [type,rid]=edit.dataset.edit.split(':');const rec=state[type].find(x=>x.id===rid);if(rec)openModal(type,rec)}
  const del=ev.target.closest('[data-delete]');if(del){const [type,rid]=del.dataset.delete.split(':');if(confirm('Delete this record?')){state[type]=state[type].filter(x=>x.id!==rid);save();toast('Record deleted.')}}
 });
-document.querySelector('#add-vehicle').onclick=()=>openModal('vehicle');document.querySelector('#empty-add').onclick=()=>openModal('vehicle');
+document.querySelector('#add-vehicle').onclick=()=>openModal('vehicle');document.querySelector('#empty-add')?.addEventListener('click',()=>openModal('vehicle'));
 document.querySelector('#add-maintenance').onclick=()=>openModal('maintenance');document.querySelector('#add-mileage').onclick=()=>openModal('mileage');document.querySelector('#add-expense').onclick=()=>openModal('expenses');document.querySelector('#quick-log').onclick=()=>openModal('expenses');document.querySelector('#add-reminder').onclick=()=>openModal('reminders');
 document.querySelector('#modal-close').onclick=closeModal;document.querySelector('#modal-cancel').onclick=closeModal;document.querySelector('#maintenance-filter').onchange=render;
 document.addEventListener('change',ev=>{if(ev.target.id==='vehicle-select'){state.active=ev.target.value;save()}});
